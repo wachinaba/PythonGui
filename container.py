@@ -1,18 +1,36 @@
-class Container():
+class Node():
   def __init__(self):
-    self._next = None
-    self._prev = None
+    self.prev = None
+    self.next = None
 
-    self.childs = None
-    self._childs_len = 0
+class Container(Node):
+  class AppendError(Exception):
+    pass
+
+  def __init__(self):
+    super().__init__()
+
+    self.parent = None
+    self.childs_head = Node()
+    self.childs_len = 0
 
   def __len__(self):
-    return self._childs_len
+    return self.childs_len
 
-  def append(self, container):
-    container._next = self.childs
-    
-    
+  def attach(self, parent):
+    if self.parent:
+      raise Container.AppendError("The container already has been in another deque")
+
+    self.parent = parent
+    self.prev, self.next = parent.childs_head, parent.childs_head.next
+    parent.childs_head.next.prev = parent.childs_head.next = self
+    parent.childs_len += 1
+
+  def detach(self):
+    self.prev.next = self.next
+    self.next.prev = self.prev
+    self.parent.childs_len -= 1
+    self.prev = self.next = self.parent = None
 
 
   
