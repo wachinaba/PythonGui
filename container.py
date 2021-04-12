@@ -31,6 +31,9 @@ class Container(Node):
     self.next.prev = self.prev
     self.parent.childs_len -= 1
     self.prev = self.next = self.parent = None
-
-
   
+  def move_top(self):
+    self.prev.next = self.next
+    self.next.prev = self.prev
+    self.prev, self.next = self.parent.childs_head, self.parent.childs_head.next
+    self.parent.childs_head.next.prev = self.parent.childs_head.next = self
