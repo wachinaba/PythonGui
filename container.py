@@ -4,7 +4,9 @@ class Node():
     self.next = None
 
 class Container(Node):
-  class AppendError(Exception):
+  class AttachError(Exception):
+    pass
+  class DetachError(Exception):
     pass
 
   def __init__(self):
@@ -19,7 +21,7 @@ class Container(Node):
 
   def attach(self, parent):
     if self.parent:
-      raise Container.AppendError("The container already has been in another deque")
+      raise Container.AttachError("The container already has been in another deque")
 
     self.parent = parent
     self.prev, self.next = parent.childs_head, parent.childs_head.next
@@ -27,6 +29,8 @@ class Container(Node):
     parent.childs_len += 1
 
   def detach(self):
+    if not self.parent:
+      raise Container.DetachError("The container doesn't have a parent")
     self.prev.next = self.next
     self.next.prev = self.prev
     self.parent.childs_len -= 1
@@ -37,7 +41,6 @@ class Container(Node):
     self.next.prev = self.prev
     self.prev, self.next = self.parent.childs_head, self.parent.childs_head.next
     self.parent.childs_head.next.prev = self.parent.childs_head.next = self
-
 
   def __iter__(self):
     return Container.Iterator(self)
@@ -71,3 +74,18 @@ class Container(Node):
       else:
         raise StopIteration
     
+  def process_callback(self):
+    pass
+
+  def draw_callback(self):
+    pass
+
+  def process(self):
+    self.process_callback()
+    for c in self:
+      c.process()
+
+  def draw(self):
+    for c in reversed(self):
+      c.draw()
+    self.draw_callback()
