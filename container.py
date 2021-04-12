@@ -37,3 +37,37 @@ class Container(Node):
     self.next.prev = self.prev
     self.prev, self.next = self.parent.childs_head, self.parent.childs_head.next
     self.parent.childs_head.next.prev = self.parent.childs_head.next = self
+
+
+  def __iter__(self):
+    return Container.Iterator(self)
+
+  def __reversed__(self):
+    return Container.ReversedIterator
+
+  class Iterator():
+    def __init__(self, container):
+      self.container = container
+      self.next = container.childs_head
+
+    def __iter__(self):
+      return self
+
+    def __next__(self):
+      self.next = self.next.next
+      if not self.next == self.container.childs_head:
+        return self.next
+      else:
+        raise StopIteration
+
+  class ReversedIterator(Iterator):
+    def __init__(self, container):
+      super().__init__(container)
+
+    def __next__(self):
+      self.next = self.next.prev
+      if not self.next == self.container.childs_head:
+        return self.next
+      else:
+        raise StopIteration
+    
