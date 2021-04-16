@@ -15,6 +15,7 @@ class Container(Node):
     self.parent = None
     self.childs_head = Node()
     self.childs_len = 0
+    self.state = dict()
 
   def __len__(self):
     return self.childs_len
