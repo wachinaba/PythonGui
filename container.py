@@ -15,7 +15,6 @@ class Container(Node):
     self.parent = None
     self.childs_head = Node()
     self.childs_len = 0
-    self.state = dict()
 
   def __len__(self):
     return self.childs_len
@@ -75,18 +74,3 @@ class Container(Node):
       else:
         raise StopIteration
     
-  def process_callback(self):
-    pass
-
-  def draw_callback(self):
-    pass
-
-  def process(self):
-    self.process_callback()
-    for c in self:
-      c.process()
-
-  def draw(self):
-    for c in reversed(self):
-      c.draw()
-    self.draw_callback()
