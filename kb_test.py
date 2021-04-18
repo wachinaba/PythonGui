@@ -14,7 +14,7 @@ if pg.get_sdl_version() < (2, 0, 0):
 # Set to true or add 'showevent' in argv to see IME and KEYDOWN events
 PRINT_EVENT = False
 # frames per second, the general speed of the program
-FPS = 50
+FPS = 240
 # size of window
 WINDOWWIDTH, WINDOWHEIGHT = 640, 480
 BGCOLOR = (0, 0, 0)
