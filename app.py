@@ -29,5 +29,6 @@ class App(screen.RootScreen):
         self.draw()
       self.clock.tick(self.FPS)
   
-  def 
+  def post_event(self):
+    pygame.event.post([sync])
 
